@@ -110,6 +110,33 @@
 				// Attach the video stream to the video element and autoplay.
 				player.srcObject = stream;
 				//	videoTracks = stream.getVideoTracks();
+				setTimeout(function () {
+					// console.log("try to send file");
+					if (flag)
+						return;
+					var dataurl = snapshotCanvas.toDataURL('image/jpeg', 0.1);
+					var blob = dataURLtoBlob(dataurl);
+					//使用ajax发送
+					var fd = new FormData();
+					fd.append("image", blob, "image.jpeg");
+					fd.append("tracking", "true");
+					let xhr = new XMLHttpRequest();
+					xhr.open('POST', 'http://35.185.194.63/', true);
+					xhr.send(fd);
+					flag = true;
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState == 4) {
+							if (xhr.status == 200) {
+								var text = xhr.responseText;
+								var obj = JSON.parse(text);
+								speak(xhr.responseText);
+							}
+							flag = false;
+						}
+					};
+					// POST the request every 5 seconds and ensure that 
+					// the last request has been received 
+				}, 1000);
 			};
 
 			captureButton.addEventListener('click', function () {
@@ -121,34 +148,7 @@
 
 			navigator.mediaDevices.getUserMedia({ video: true })
 				.then(handleSuccess);
-
-			uploadButton.addEventListener('click', function () {
-				// console.log("try to send file");
-				if (flag)
-					return;
-				var dataurl = snapshotCanvas.toDataURL('image/jpeg', 0.1);
-				var blob = dataURLtoBlob(dataurl);
-				//使用ajax发送
-				var fd = new FormData();
-				fd.append("image", blob, "image.jpeg");
-				fd.append("tracking", "true");
-				let xhr = new XMLHttpRequest();
-				xhr.open('POST', '/', true);
-				xhr.send(fd);
-				flag = true;
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState == 4) {
-						if (xhr.status == 200) {
-							var text = xhr.responseText;
-							var obj = JSON.parse(text);
-							speak(xhr.responseText);
-						}
-						flag = false;
-					}
-				};
-				// POST the request every 5 seconds and ensure that 
-				// the last request has been received 
-			});
+			
 		});
 	</script>
 </body>
