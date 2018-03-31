@@ -15,15 +15,15 @@
 		background-repeat: no-repeat;
 	}
 
-	div.btn-group {
+	/* div.btn-group {
 		text-align: center;
 		margin-top: 300px;
 		margin-left: 640px;
 		margin-bottom: 100px;
-	}
+	} */
 
-	.btn-group button {
-		border: 10px solid;
+	.btn {
+		font-size: 30px;
 		/* Green border */
 		padding: 10px 24px;
 		/* Some padding */
@@ -31,8 +31,7 @@
 		/* Pointer/hand icon */
 		display: block;
 		/* Make the buttons appear below each other */
-		width: 150%;
-		/* Set a width if needed */
+		width: 200px;
 	}
 
 	.header {
@@ -46,12 +45,14 @@
 	<div class="header">
 		<h1>Eye.ai</h1>
 	</div>
-	<div class="btn-group">
-		<button type="button" class="btn btn-primary">About</button>
-		<form>
-			<button type="button" class="btn btn-primary" onclick= "window.location.href = 'Launch.html'">Launch</button>
-		</form>
-	</div>
+		<center>
+			<div style="margin: 30px;">
+				<button type="button" class="btn btn-primary">About</button>
+			</div>
+			<div>
+				<button type="button" class="btn btn-primary" onclick= "window.location.href = 'Launch.html'">Launch</button>
+			</div>
+		</center>
 </body>
 
 </html>
