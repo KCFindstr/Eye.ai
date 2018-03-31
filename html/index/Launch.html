@@ -2,7 +2,7 @@
 <html>
 
 <head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.6/jquery.fullpage.min.css" rel="stylesheet" type="text/css"
 	/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -43,7 +43,7 @@
 		display: block;
 		/* Make the buttons appear below each other */
 		width: 200px;
-		position: absolute;
+		float: left;
 	}
 
 	#capture {
@@ -53,17 +53,49 @@
 	#upload {
 		top: 170px;
 	}
+
+	video {
+		width: 800px;
+		height: 600px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 0;
+	}
+	#vcontain {
+		width: 800px;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+	}
+	#draw {
+		background-color: rgba(255, 0, 0, 0.5);
+		z-index: 10;
+		width: 800px;
+		height: 600px;
+		position:absolute;
+		top:0;
+		left:0;
+	}
 </style>
 
 <body>
-	<div>
-		<video id="player" controls autoplay></video>
-		<button id="capture" type="button" class="btn btn-primary">Capture</button>
-		<button id="upload" type="button" class="btn btn-primary">Upload</button>
-	</div>
-	<div>
-		<canvas id="snapshot" width=400 height=300></canvas>
-	</div>
+	<center>
+		<div id="vcontain">
+			<div>
+				<canvas id="draw"> </canvas>
+				<video id="player" controls autoplay></video>
+			</div>
+		</div>
+		<div>
+			<button id="capture" type="button" class="btn btn-primary">Capture</button>
+			<button id="upload" type="button" class="btn btn-primary">Upload</button>
+		</div>
+		<div>
+			<canvas id="snapshot" width=400 height=300></canvas>
+		</div>
+	</center>
+
 	<script>
 		$(document).ready(function () {
 
@@ -107,6 +139,8 @@
 				xhr.onreadystatechange = function () {
 					if (xhr.readyState == 4) {
 						if (xhr.status == 200) {
+							var text = xhr.responseText;
+							var obj = JSON.parse(text);
 							speak(xhr.responseText);
 						}
 						flag = false;
