@@ -9,7 +9,7 @@ import requests
 app = Flask(__name__)
 '''
 # introduction http://flask.pocoo.org/docs/0.12/quickstart/#static-files
-url_for('static', filename='style.css')
+# url_for('static', filename='style.css')
 #UPLOAD_FOLDER is where we will store the uploaded files
 UPLOAD_FOLDER = '/Users/yuyang/Desktop/temp'
 #allowed format
