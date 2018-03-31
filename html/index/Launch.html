@@ -2,6 +2,7 @@
 <html>
 
 <head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.6/jquery.fullpage.min.css" rel="stylesheet" type="text/css"
 	/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -28,13 +29,41 @@
 </head>
 <!-- <video id="video" width="640" height="480" autoplay></video> -->
 <!-- <button id="snap">Snap Photo</button> -->
+<style>
+	.btn {
+		text-align: center;
+		margin-top: 30px;
+		margin-left: 700px;
+		font-size: 30px;
+		/* Green border */
+		padding: 10px 24px;
+		/* Some padding */
+		cursor: pointer;
+		/* Pointer/hand icon */
+		display: block;
+		/* Make the buttons appear below each other */
+		width: 200px;
+		position: absolute;
+	}
+
+	#capture {
+		top: 70px;
+	}
+
+	#upload {
+		top: 170px;
+	}
+</style>
 
 <body>
-	<input id="myFileInput" type="file" accept="image/*;capture=camera">
-	<video id="player" controls autoplay></video>
-	<button id="capture">Capture</button>
-	<canvas id="snapshot" width=320 height=240></canvas>
-	<button id="upload">Upload</button>
+	<div>
+		<video id="player" controls autoplay></video>
+		<button id="capture" type="button" class="btn btn-primary">Capture</button>
+		<button id="upload" type="button" class="btn btn-primary">Upload</button>
+	</div>
+	<div>
+		<canvas id="snapshot" width=400 height=300></canvas>
+	</div>
 	<script>
 		$(document).ready(function () {
 
@@ -42,13 +71,13 @@
 			var snapshotCanvas = document.getElementById('snapshot');
 			var captureButton = document.getElementById('capture');
 			var uploadButton = document.getElementById('upload');
-			var videoTracks;
+			// var videoTracks;
 			var flag = false;
 
 			var handleSuccess = function (stream) {
 				// Attach the video stream to the video element and autoplay.
 				player.srcObject = stream;
-				videoTracks = stream.getVideoTracks();
+				//	videoTracks = stream.getVideoTracks();
 			};
 
 			captureButton.addEventListener('click', function () {
