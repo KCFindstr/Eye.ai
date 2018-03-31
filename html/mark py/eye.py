@@ -1,20 +1,21 @@
 import os
-from flask import Flask, request, redirect, url_for, flash,send_file, render_template, send_from_directory
+from flask import Flask, request, redirect, url_for, flash, send_file, render_template, send_from_directory
 from werkzeug.utils import secure_filename
 import requests
-
+# import "templates/Launch - Eye.ai.html"
 app = Flask(__name__)
 
-
-#allowed format
-ALLOWED_EXTENSIONS = set(['jpg','jpeg'])
-#UPLOADED_PHOTOS_DEST = '/path/to/the/uploads'
-#UPLOADS_DEFAULT_DEST = '/path/to/the/uploads'
+# allowed format
+ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'pdf'])
+UPLOAD_FOLDER = '/Users/yuyang/PycharmProjects/eye.ai/test'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = "UPLOAD"
 # introduction http://flask.pocoo.org/docs/0.12/quickstart/#static-files
 # url_for('static', filename='style.css')
 
-#used to store pictures
-photoGallary=[]
+# used to store pictures's name
+photoGallary = []
+UPPER_SIZE_photoGallary = 20;
 
 html = '''
     <!DOCTYPE html>
@@ -28,11 +29,7 @@ html = '''
 '''
 downloadFilePos=""
 
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SECRET_KEY']="UPLOAD"
-
-
+# original method, used for storage
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -47,14 +44,14 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            # filename = secure_filename(file.filename)#use secure_filename function for safety
-            filename=file.filename
+            filename = secure_filename(file.filename) #use secure_filename function for safety
+            # update the file & clean the photo cache
+            photoGallary.append(filename)
+            cleanPhotoCache()
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            # new_audio_name = clean_audio(app.config['UPLOAD_FOLDER'] + "/" + filename, "em_lyrics.txt")
-            # return redirect(url_for('uploaded_file',filename=filename))
             return redirect(request.url)
-    return render_template('index.html')
+    return html
 
 # @app.route('/uploads/<filename>')
 # def uploaded_file(filename):
@@ -86,28 +83,58 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/home', methods=[ 'PUT','POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
+        # if 'file' not in request.files:
+        #     flash('No file part')
+        #     return redirect(request.url)
+        file = request.files['image']
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename) #use secure_filename function for safety
+            filename = secure_filename(file.filename)  # use secure_filename function for safety
+            # update the file & clean the photo cache
             photoGallary.append(filename)
+            cleanPhotoCache()
+            print(photoGallary)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            # new_audio_name = clean_audio(app.config['UPLOAD_FOLDER'] + "/" + filename, "em_lyrics.txt")
-            # return redirect(url_for('uploaded_file',filename=filename))
             return redirect(request.url)
-    return html
+
+
+@app.route('/', methods=['GET','POST'])
+def home():
+    '''
+    #first render the template, then send post
+    return redirect(url_for('upload_file'))
+    '''
+    cleanPhotoCache()
+    if request.method == 'POST':
+        print(url_for('upload_file'))
+        upload_file()
+    return render_template('eye.html')
+
+# @app.route('/about',methods=['GET','POST'])
+# def display():
+#     redirect(url_for())
+
+def cleanPhotoCache():
+    # get all files in the upload folder
+    photoGallary=os.listdir(app.config['UPLOAD_FOLDER'])
+    # if there are files not belong to the folder, ignore them
+    for files in photoGallary:
+        if(files[len(files)-3:] not in ALLOWED_EXTENSIONS):
+            photoGallary.remove(files)
+
+    while len(photoGallary) > UPPER_SIZE_photoGallary:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], photoGallary[0]))
+        del photoGallary[0]
+
 
 if __name__ == "__main__":
     app.run()
