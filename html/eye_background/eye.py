@@ -22,10 +22,10 @@ UPPER_SIZE_photoGallary = 20;
 html = '''
     <!DOCTYPE html>
     <title>Upload File</title>
-    <h1>图片上传</h1>
+    <h1>picture upload</h1>
     <form method=post enctype=multipart/form-data>
          <input type=file name=file>
-         <input type=submit value=上传>
+         <input type=submit value=upload>
     </form>
 '''
 
