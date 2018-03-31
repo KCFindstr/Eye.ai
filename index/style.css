@@ -1,0 +1,5 @@
+body {
+	background-image: url("bg.img");
+	opacity: 0.5;
+	position: relative;
+}
