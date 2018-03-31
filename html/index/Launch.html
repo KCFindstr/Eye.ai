@@ -43,6 +43,7 @@
 			var captureButton = document.getElementById('capture');
 			var uploadButton = document.getElementById('upload');
 			var videoTracks;
+			var flag = false;
 
 			var handleSuccess = function (stream) {
 				// Attach the video stream to the video element and autoplay.
@@ -62,6 +63,8 @@
 
 			uploadButton.addEventListener('click', function () {
 				// console.log("try to send file");
+				if (flag)
+					return;
 				var dataurl = snapshotCanvas.toDataURL('image/jpeg', 0.1);
 				var blob = dataURLtoBlob(dataurl);
 				//使用ajax发送
@@ -71,9 +74,13 @@
 				let xhr = new XMLHttpRequest();
 				xhr.open('POST', '/', true);
 				xhr.send(fd);
+				flag = true;
 				xhr.onreadystatechange = function () {
-					if (xhr.readyState == 4 && xhr.status == 200) {
-						speak(xhr.responseText);
+					if (xhr.readyState == 4) {
+						if (xhr.status == 200) {
+							speak(xhr.responseText);
+						}
+						flag = false;
 					}
 				};
 				// POST the request every 5 seconds and ensure that 
