@@ -88,12 +88,12 @@ def home():
 def situationAnalysis():
     # array of dictionary
     situation = [
-        {"name": "Lion", "xPos": 0.25, "yPos": 0.5, "lengthPercent": 0.025, "heightPercent": 0.025,
-         "motion": "to the right", "dangerLevel": 0.7},
-        {"name": "Tiger", "xPos": 0.56, "yPos": 0.5, "lengthPercent": 0.015, "heightPercent": 0.035,
-         "motion": "to the right", "dangerLevel": 0.8},
-        {"name": "UFO", "xPos": 0.77, "yPos": 0.7, "lengthPercent": 0.005, "heightPercent": 0.025,
-         "motion": "to the right", "dangerLevel": 0.9}
+        {"name": "Lion", "position": (0.25, 0.5), "size": (0.025, 0.025),
+         "vector": (1, -1), "dangerLevel": 0.7},
+        {"name": "Tiger", "position": (0.56, 0.5), "size": (0.015, 0.035),
+         "vector": (2, 0), "dangerLevel": 0.8},
+        {"name": "UFO", "position": (0.77, 0.57), "size": (0.005, 0.45),
+         "vector": (4, 4), "dangerLevel": 0.9}
     ]
     in_json = json.dumps(situation)  # Encode the data
     return in_json
