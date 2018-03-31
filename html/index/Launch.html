@@ -26,64 +26,62 @@
 			window.speechSynthesis.speak(msg);
 		}
 	</script>
+	<script src="painting.js"></script>
+	<style>
+		.btn {
+			text-align: center;
+			margin-top: 30px;
+			margin-left: 700px;
+			font-size: 30px;
+			/* Green border */
+			padding: 10px 24px;
+			/* Some padding */
+			cursor: pointer;
+			/* Pointer/hand icon */
+			display: block;
+			/* Make the buttons appear below each other */
+			width: 200px;
+			float: left;
+		}
+	
+		#capture {
+			top: 70px;
+		}
+	
+		#upload {
+			top: 170px;
+		}
+	
+		video {
+			width: 800px;
+			height: 600px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 0;
+		}
+		#vcontain {
+			width: 800px;
+			margin-left: auto;
+			margin-right: auto;
+			position: relative;
+		}
+		#draw {
+			background-color: transparent;
+			z-index: 10;
+			position:absolute;
+			top:0;
+			left:0;
+		}
+	</style>
 </head>
-<!-- <video id="video" width="640" height="480" autoplay></video> -->
-<!-- <button id="snap">Snap Photo</button> -->
-<style>
-	.btn {
-		text-align: center;
-		margin-top: 30px;
-		margin-left: 700px;
-		font-size: 30px;
-		/* Green border */
-		padding: 10px 24px;
-		/* Some padding */
-		cursor: pointer;
-		/* Pointer/hand icon */
-		display: block;
-		/* Make the buttons appear below each other */
-		width: 200px;
-		float: left;
-	}
 
-	#capture {
-		top: 70px;
-	}
-
-	#upload {
-		top: 170px;
-	}
-
-	video {
-		width: 800px;
-		height: 600px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 0;
-	}
-	#vcontain {
-		width: 800px;
-		margin-left: auto;
-		margin-right: auto;
-		position: relative;
-	}
-	#draw {
-		background-color: rgba(255, 0, 0, 0.5);
-		z-index: 10;
-		width: 800px;
-		height: 600px;
-		position:absolute;
-		top:0;
-		left:0;
-	}
-</style>
 
 <body>
 	<center>
 		<div id="vcontain">
 			<div>
-				<canvas id="draw"> </canvas>
+				<canvas id="draw" width="800px" height="600px"></canvas>
 				<video id="player" controls autoplay></video>
 			</div>
 		</div>
@@ -103,6 +101,7 @@
 			var snapshotCanvas = document.getElementById('snapshot');
 			var captureButton = document.getElementById('capture');
 			var uploadButton = document.getElementById('upload');
+			var drawCanvas = document.getElementById('draw');
 			// var videoTracks;
 			var flag = false;
 
@@ -129,7 +128,8 @@
 							if (xhr.status == 200) {
 								var text = xhr.responseText;
 								var obj = JSON.parse(text);
-								speak(xhr.responseText);
+								console.log(JSON.stringify(obj));
+								drawHYYObjectsOnCanvas(draw, obj);
 							}
 							flag = false;
 						}
