@@ -3,12 +3,13 @@ from flask import Flask, request, redirect, url_for, flash, send_file, render_te
 from werkzeug.utils import secure_filename
 import requests
 import json
+from config import *
 
 app = Flask(__name__)
 
 # allowed format
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'pdf'])
-UPLOAD_FOLDER = '/Users/yuyang/PycharmProjects/eye.ai/test'
+# UPLOAD_FOLDER set in the config.py
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = "UPLOAD"
 # introduction http://flask.pocoo.org/docs/0.12/quickstart/#static-files
