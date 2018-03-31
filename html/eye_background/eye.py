@@ -77,7 +77,7 @@ def home():
         if (request.form['tracking'] == "true"):
             print("get tracking request")
             # TODO return json package
-            return "Hello"
+            return situationAnalysis()
         else:
             # it is the request for detecting
             print("get detecting request")
@@ -86,11 +86,12 @@ def home():
 
 
 def situationAnalysis():
-    data = {"spam": "foo", "parrot": 42}
-    #           name,   x-pos, y-pos, area , motion
-    situation = [["Lion", 100, 100.5, 2500, "to the right"],
-                 ["Tiger", 200, 100.5, 2500, "to the right"],
-                 ["UFO", 50, 100.5, 2500, "to the left"]]
+    # array of dictionary
+    situation = [
+        {"name": "Lion", "xPos": 100, "yPos": 100.5, "area": 2500, "motion": "to the right", "dangerLevel": 0.7},
+        {"name": "Tiger", "xPos": 200, "yPos": 10.5, "area": 250, "motion": "to the right", "dangerLevel": 0.8},
+        {"name": "UFO", "xPos": 50, "yPos": 140.5, "area": 700, "motion": "to the right", "dangerLevel": 0.9}
+    ]
     in_json = json.dumps(situation)  # Encode the data
     return in_json
 
