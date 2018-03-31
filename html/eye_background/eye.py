@@ -3,12 +3,13 @@ from flask import Flask, request, redirect, url_for, flash, send_file, render_te
 from werkzeug.utils import secure_filename
 import requests
 import json
+from config import *
 
 app = Flask(__name__)
 
 # allowed format
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'pdf'])
-UPLOAD_FOLDER = '/Users/yuyang/PycharmProjects/eye.ai/test'
+# UPLOAD_FOLDER set in the config.py
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = "UPLOAD"
 # introduction http://flask.pocoo.org/docs/0.12/quickstart/#static-files
@@ -76,7 +77,7 @@ def home():
         if (request.form['tracking'] == "true"):
             print("get tracking request")
             # TODO return json package
-            return "Hello"
+            return situationAnalysis()
         else:
             # it is the request for detecting
             print("get detecting request")
@@ -85,11 +86,15 @@ def home():
 
 
 def situationAnalysis():
-    data = {"spam": "foo", "parrot": 42}
-    #           name,   x-pos, y-pos, area , motion
-    situation = [["Lion", 100, 100.5, 2500, "to the right"],
-                 ["Tiger", 200, 100.5, 2500, "to the right"],
-                 ["UFO", 50, 100.5, 2500, "to the left"]]
+    # array of dictionary
+    situation = [
+        {"name": "Lion", "position": (0.25, 0.5), "size": (0.025, 0.025),
+         "vector": (1, -1), "dangerLevel": 0.7},
+        {"name": "Tiger", "position": (0.56, 0.5), "size": (0.015, 0.035),
+         "vector": (2, 0), "dangerLevel": 0.8},
+        {"name": "UFO", "position": (0.77, 0.57), "size": (0.005, 0.45),
+         "vector": (4, 4), "dangerLevel": 0.9}
+    ]
     in_json = json.dumps(situation)  # Encode the data
     return in_json
 
