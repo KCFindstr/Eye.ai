@@ -7,6 +7,6 @@ In the server:
 ```
 cd /eyeai/Eye.ai/
 git pull
-sodu bash /var/www/build.sh
+sudo bash /var/www/build.sh
 ```
 Changes will then be applied to the website.
