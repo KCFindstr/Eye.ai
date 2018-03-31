@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.6/jquery.fullpage.min.css" rel="stylesheet" type="text/css"
+	/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		function speak() {
+			var text = $("#test").val();
+			var msg = new SpeechSynthesisUtterance(text);
+			window.speechSynthesis.speak(msg);
+		}
+		$(document).ready(function(){
+			$('form').attr('onsubmit', 'return false');
+		})
+	</script>
+</head>
+
+<body>
+	<form method="" target="">
+		<input type="text" name="test" id="test" style="width: 200px;"/>
+		<button onclick="speak()">Speak</button>
+	</form>
+</body>
+
+</html>
