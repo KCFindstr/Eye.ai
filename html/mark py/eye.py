@@ -71,27 +71,27 @@ def home():
     cleanPhotoCache()
     if request.method == 'POST':
         print(request.form)
+        #  upload the photo
+        upload_file()
         if (request.form['tracking'] == "true"):
             print("get tracking request")
-            # return something to
-            upload_file()
-            return "Jude is very Smart!!!"
+            # TODO return json package
+            return "Hello"
         else:
             # it is the request for detecting
             print("get detecting request")
         print(url_for('upload_file'))
-        upload_file()
     return render_template('Launch.html')
 
 
 def situationAnalysis():
     data = {"spam": "foo", "parrot": 42}
-    #   name, x-pos, y-pos, area , motion
-    situation=[["Lion",100,100.5,2500,"to the right"],
-               ["Tiger", 200, 100.5, 2500, "to the right"],
-               ["UFO", 50, 100.5, 2500, "to the left"]]
+    #           name,   x-pos, y-pos, area , motion
+    situation = [["Lion", 100, 100.5, 2500, "to the right"],
+                 ["Tiger", 200, 100.5, 2500, "to the right"],
+                 ["UFO", 50, 100.5, 2500, "to the left"]]
     in_json = json.dumps(situation)  # Encode the data
-    return  in_json
+    return in_json
 
 
 def cleanPhotoCache():
