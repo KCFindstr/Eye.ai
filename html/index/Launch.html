@@ -102,7 +102,7 @@
 			<div id="vd">
 				<canvas id="draw" width="800px" height="600px"></canvas>
 				<video id="player" controls autoplay></video>
-				<canvas id="snapshot" width=400 height=300></canvas>
+				<canvas id="snapshot" width="400px" height="300px"></canvas>
 			</div>
 			<div id="info"></div>
 		</div>
@@ -163,7 +163,7 @@
 					};
 					// POST the request every 5 seconds and ensure that 
 					// the last request has been received 
-				}, 1000);
+				}, 100);
 			};
 
 			navigator.mediaDevices.getUserMedia({ video: true })

@@ -21,7 +21,7 @@ function speak(text) {
 // Draw rectangle
 function drawHYYObjectsOnCanvas(canvas, obj) {
 	var scale = [canvas.width, canvas.height];
-	var safe = [0, 128, 255];
+	var safe = [0, 255, 0];
 	var danger = [255, 64, 0];
 	var ctx = canvas.getContext("2d");
 	var ele = $("#info");
