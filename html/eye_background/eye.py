@@ -4,11 +4,12 @@ from werkzeug.utils import secure_filename
 import requests
 import json
 from config import *
+from PIL import Image
 
 app = Flask(__name__)
 
 # allowed format
-ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'pdf'])
+ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
 # UPLOAD_FOLDER set in the config.py
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = "UPLOAD"
@@ -53,13 +54,16 @@ def upload_file():
             filename = secure_filename(file.filename)  # use secure_filename function for safety
             # update the file & clean the photo cache
             cleanPhotoCache()
-            print(photoGallary)
-            print(request.form)
             # revise the filename with order
             filename = filename.rsplit('.', 1)[0].lower() + str(len(photoGallary)) + "." + \
                        filename.rsplit('.', 1)[1].lower()
             photoGallary.append(filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # save file
+            # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            image = Image.open("test/" + filename)
+            # send this image object to zhou jincheng
+
             return redirect(request.url)
 
 
@@ -71,7 +75,6 @@ def home():
     '''
     cleanPhotoCache()
     if request.method == 'POST':
-        print(request.form)
         #  upload the photo
         upload_file()
         if (request.form['tracking'] == "true"):
@@ -81,7 +84,7 @@ def home():
         else:
             # it is the request for detecting
             print("get detecting request")
-        print(url_for('upload_file'))
+
     return render_template('Launch.html')
 
 
@@ -99,6 +102,7 @@ def situationAnalysis():
     return in_json
 
 
+'''
 def cleanPhotoCache():
     # get all files in the upload folder
     photoGallary = os.listdir(app.config['UPLOAD_FOLDER'])
@@ -110,7 +114,7 @@ def cleanPhotoCache():
     while len(photoGallary) > UPPER_SIZE_photoGallary:
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], photoGallary[0]))
         del photoGallary[0]
-
+'''
 
 if __name__ == "__main__":
     app.run()
