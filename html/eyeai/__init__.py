@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import requests
 import json
 from PIL import Image
-from ~/object_detection/detection_inference_api import object_detection
+from /User/jinhuyinhu99513/object_detection/detection_inference_api import object_detection
 from config import *
 
 app = Flask(__name__)
