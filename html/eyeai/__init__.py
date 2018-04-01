@@ -76,7 +76,7 @@ def upload_file():
 
             image = Image.open(file)
             image.load()
-            detection = object_detection()
+            detection = ObjectDetection()
             result = detection.detect_boundingbox(image)
             # send this image object to zhou jincheng
 
