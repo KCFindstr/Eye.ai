@@ -15,6 +15,7 @@ from detection_inference_api import ObjectDetection
 os.chdir("/home/jinhuyinhu99513/object_detection/")
 
 app = Flask(__name__)
+detection = ObjectDetection()
 
 # allowed format
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
@@ -73,10 +74,8 @@ def upload_file():
             # save file
             # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-
             image = Image.open(file)
             image.load()
-            detection = ObjectDetection()
             result = detection.detect_boundingbox(image)
             # send this image object to zhou jincheng
 
