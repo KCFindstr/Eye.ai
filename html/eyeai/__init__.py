@@ -1,11 +1,13 @@
 import os
+import sys
 from flask import Flask, request, redirect, url_for, flash, send_file, render_template, send_from_directory
 from werkzeug.utils import secure_filename
 import requests
 import json
 from PIL import Image
-from /User/jinhuyinhu99513/object_detection/detection_inference_api import object_detection
 from config import *
+sys.path.append("/User/jinhuyinhu99513/object_detection/")
+from detection_inference_api import object_detection
 
 app = Flask(__name__)
 
