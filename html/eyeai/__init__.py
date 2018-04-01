@@ -5,10 +5,10 @@ from werkzeug.utils import secure_filename
 import requests
 import json
 from PIL import Image
-from config import *
+# from config import *
 sys.path.append("/home/jinhuyinhu99513/object_detection/")
 from detection_inference_api import object_detection
-
+os.chdir("/home/jinhuyinhu99513/object_detection/")
 app = Flask(__name__)
 
 # allowed format
