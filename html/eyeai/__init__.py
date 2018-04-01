@@ -106,9 +106,9 @@ def home():
 
 def situationAnalysis(detectionResult):
     # specification of danger level
-    dangerStdIndex=0.25;
-    dangerIndex={'person':dangerStdIndex**0.5,'bear':dangerStdIndex**0.5,
-                 'tree':dangerStdIndex**0.7,'light':dangerStdIndex**0.7}
+    dangerStdIndex = 0.25;
+    dangerIndex = {'person': dangerStdIndex ** 0.5, 'bear': dangerStdIndex ** 0.5,
+                   'tree': dangerStdIndex ** 0.7, 'light': dangerStdIndex ** 0.7}
     # result has keys [name, position, size, vector, dangerLevel, confidence]
     for result in detectionResult:
         result['position'] = (float(result["top_left_position"][1]), float(result["top_left_position"][0]))
@@ -117,8 +117,8 @@ def situationAnalysis(detectionResult):
         # vector is the speed
         result["vector"] = (0, 0)
         # specifc item has been optimized
-        if(result['name'] in dangerIndex):
-            result["dangerLevel"]=dangerIndex[result['name']]
+        if (result['name'] in dangerIndex):
+            result["dangerLevel"] = (result['size'][0] * result['size'][1]) ** dangerIndex[result['name']]
         else:
             # currently use the area of the object to measure its dangerous level
             result["dangerLevel"] = (result['size'][0] * result['size'][1]) ** dangerStdIndex
