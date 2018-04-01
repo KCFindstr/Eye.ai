@@ -107,8 +107,8 @@ def home():
 def situationAnalysis(detectionResult):
     # specification of danger level
     dangerStdIndex = 0.25;
-    dangerIndex = {'person': dangerStdIndex ** 0.5, 'bear': dangerStdIndex ** 0.5,
-                   'tree': dangerStdIndex ** 0.7, 'light': dangerStdIndex ** 0.7}
+    dangerIndex = {'person': dangerStdIndex * 0.4, 'bear': dangerStdIndex * 0.2,
+                   'tree': dangerStdIndex * 0.7, 'light': dangerStdIndex * 0.7}
     # result has keys [name, position, size, vector, dangerLevel, confidence]
     for result in detectionResult:
         result['position'] = (float(result["top_left_position"][1]), float(result["top_left_position"][0]))
