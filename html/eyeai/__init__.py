@@ -72,13 +72,22 @@ def upload_file():
             photoGallary.append(filename)
             # save file
             # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print("before open file")
-            image = Image.open(file)
-            image.load()
-            print("before detection")
-            detection = object_detection()
-            print("after detection")
-            result = detection.detect_boundingbox(image)
+
+            result = [
+                {"name": "Lion", "position": (0.25, 0.5), "size": (0.025, 0.025),
+                 "vector": (1, 0), "dangerLevel": 0.7},
+                {"name": "Tiger", "position": (0.56, 0.5), "size": (0.015, 0.035),
+                 "vector": (-1, 0), "dangerLevel": 0.8},
+                {"name": "UFO", "position": (0.77, 0.57), "size": (0.005, 0.45),
+                 "vector": (0.6, 0.8), "dangerLevel": 0.9}
+            ]
+            # print("before open file")
+            # image = Image.open(file)
+            # image.load()
+            # print("before detection")
+            # detection = object_detection()
+            # print("after detection")
+            # result = detection.detect_boundingbox(image)
             # send this image object to zhou jincheng
 
             return result
