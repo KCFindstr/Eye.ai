@@ -74,9 +74,10 @@ function drawHYYObjectsOnCanvas(canvas, obj) {
 function getPosition(x, y) {
 	x -= 0.5;
 	y -= 0.5;
-	var val = x*x/0.25+y*y/0.3;
-	console.log(val, x);
-	if (val <= CENTER_LIMIT)
+	// this is an oval place
+	// var val = x*x/0.25+y*y/0.3;
+	// console.log(val, x);
+	if (Math.abs(x)<0.2)
 		return "in front of you";
 	if (x < 0)
 		return "on the left";
