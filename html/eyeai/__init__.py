@@ -7,12 +7,15 @@ import json
 from PIL import Image
 # from config import *
 sys.path.append("/home/jinhuyinhu99513/object_detection/")
+sys.path.append("/home/jinhuyinhu99513/models/research")
+sys.path.append("/home/jinhuyinhu99513/models/research/slim")
 from detection_inference_api import object_detection
 os.chdir("/home/jinhuyinhu99513/object_detection/")
 app = Flask(__name__)
 
 # allowed format
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
+
 # UPLOAD_FOLDER set in the config.py
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = "UPLOAD"
