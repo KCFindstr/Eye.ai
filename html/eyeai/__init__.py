@@ -5,12 +5,15 @@ from werkzeug.utils import secure_filename
 import requests
 import json
 from PIL import Image
+
 # from config import *
 sys.path.append("/home/jinhuyinhu99513/object_detection/")
 sys.path.append("/home/jinhuyinhu99513/models/research")
 sys.path.append("/home/jinhuyinhu99513/models/research/slim")
 from detection_inference_api import ObjectDetection
+
 os.chdir("/home/jinhuyinhu99513/object_detection/")
+
 app = Flask(__name__)
 
 # allowed format
@@ -69,10 +72,12 @@ def upload_file():
             photoGallary.append(filename)
             # save file
             # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+            print("before open file")
             image = Image.open(file)
             image.load()
+            print("before detection")
             detection = object_detection()
+            print("after detection")
             result = detection.detect_boundingbox(image)
             # send this image object to zhou jincheng
 
@@ -85,7 +90,7 @@ def home():
     #first render the template, then send post
     return redirect(url_for('upload_file'))
     '''
-
+    print("enter home")
     # cleanPhotoCache()
     if request.method == 'POST':
 
@@ -108,7 +113,7 @@ def situationAnalysis(detectionResult):
         result['position'] = result["top_left_position"]
         result['size'] = (result['bottom_right_position'][0] - result['position'][0],
                           result['bottom_right_position'][1] - result['position'][1])
-        result["vector"]=(0,0)
+        result["vector"] = (0, 0)
         result["dangerLevel"] = 0.0
         del result["top_left_position"]
         del result['bottom_right_position']
