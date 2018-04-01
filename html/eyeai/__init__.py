@@ -9,7 +9,7 @@ from PIL import Image
 sys.path.append("/home/jinhuyinhu99513/object_detection/")
 sys.path.append("/home/jinhuyinhu99513/models/research")
 sys.path.append("/home/jinhuyinhu99513/models/research/slim")
-from detection_inference_api import object_detection
+from detection_inference_api import ObjectDetection
 os.chdir("/home/jinhuyinhu99513/object_detection/")
 app = Flask(__name__)
 
