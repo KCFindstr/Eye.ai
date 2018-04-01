@@ -20,11 +20,6 @@
 			}
 			return new Blob([ia], { type: mimeString });
 		}
-
-		function speak(text) {
-			var msg = new SpeechSynthesisUtterance(text);
-			window.speechSynthesis.speak(msg);
-		}
 	</script>
 	<script src="painting.js"></script>
 	<style>
@@ -109,7 +104,7 @@
 				// Attach the video stream to the video element and autoplay.
 				player.srcObject = stream;
 				//	videoTracks = stream.getVideoTracks();
-				setTimeout(function () {
+				setInterval(function () {
 					// console.log("try to send file");
 					if (flag)
 						return;
@@ -130,6 +125,7 @@
 								var obj = JSON.parse(text);
 								console.log(JSON.stringify(obj));
 								drawHYYObjectsOnCanvas(draw, obj);
+								tell(obj);
 							}
 							flag = false;
 						}
