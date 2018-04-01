@@ -53,7 +53,8 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)  # use secure_filename function for safety
             # update the file & clean the photo cache
-            cleanPhotoCache()
+            #cleanPhotoCache()
+
             # revise the filename with order
             filename = filename.rsplit('.', 1)[0].lower() + str(len(photoGallary)) + "." + \
                        filename.rsplit('.', 1)[1].lower()
@@ -73,7 +74,8 @@ def home():
     #first render the template, then send post
     return redirect(url_for('upload_file'))
     '''
-    cleanPhotoCache()
+
+    #cleanPhotoCache()
     if request.method == 'POST':
         #  upload the photo
         upload_file()
