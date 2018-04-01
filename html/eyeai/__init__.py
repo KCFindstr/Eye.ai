@@ -74,7 +74,7 @@ def upload_file():
             # save file
             # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            image = Image.open(file)
+            image = Image.open(file.stream)
             image.load()
             result = detection.detect_boundingbox(image)
             # send this image object to zhou jincheng
@@ -107,11 +107,13 @@ def home():
 def situationAnalysis(detectionResult):
     # result has keys [name, position, size, vector, dangerLevel, confidence]
     for result in detectionResult:
-        result['position'] = result["top_left_position"]
-        result['size'] = (result['bottom_right_position'][0] - result['position'][0],
-                          result['bottom_right_position'][1] - result['position'][1])
+        result['position'] = (float(result["top_left_position"][1]), float(result["top_left_position"][0]))
+        result['size'] = (result['bottom_right_position'][1] - result['position'][0],
+                          result['bottom_right_position'][0] - result['position'][1])
         result["vector"] = (0, 0)
-        result["dangerLevel"] = 0.0
+        # currently use the area of the object to measure its dangerous level
+        result["dangerLevel"] = result['size'][0] * result['size'][1]
+        result["confidence"] = float(result["confidence"])
         del result["top_left_position"]
         del result['bottom_right_position']
 
