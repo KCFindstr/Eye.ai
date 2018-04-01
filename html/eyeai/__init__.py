@@ -6,7 +6,7 @@ import requests
 import json
 from PIL import Image
 from config import *
-sys.path.append("/User/jinhuyinhu99513/object_detection/")
+sys.path.append("/home/jinhuyinhu99513/object_detection/")
 from detection_inference_api import object_detection
 
 app = Flask(__name__)
