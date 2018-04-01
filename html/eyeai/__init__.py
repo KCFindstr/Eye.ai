@@ -65,10 +65,13 @@ def upload_file():
             # save file
             # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            image = Image.open("test/" + filename)
+            image = Image.open(file)
+            image.load()
+            detection = object_detection()
+            result = detection.detect_boundingbox(image)
             # send this image object to zhou jincheng
 
-            return redirect(request.url)
+            return result
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -78,14 +81,15 @@ def home():
     return redirect(url_for('upload_file'))
     '''
 
-    #cleanPhotoCache()
+    # cleanPhotoCache()
     if request.method == 'POST':
-        #  upload the photo
-        upload_file()
+
         if (request.form['tracking'] == "true"):
             print("get tracking request")
-            # TODO return json package
-            return "Hello"
+            #  upload the photo & get detection result
+            detectionResult = upload_file()
+            # return json package
+            return situationAnalysis(detectionResult)
         else:
             # it is the request for detecting
             print("get detecting request")
@@ -93,18 +97,20 @@ def home():
     return render_template('Launch.html')
 
 
-def situationAnalysis():
-    # array of dictionary
-    situation = [
-        {"name": "Lion", "position": (0.25, 0.5), "size": (0.025, 0.025),
-         "vector": (1, 0), "dangerLevel": 0.7},
-        {"name": "Tiger", "position": (0.56, 0.5), "size": (0.015, 0.035),
-         "vector": (-1, 0), "dangerLevel": 0.8},
-        {"name": "UFO", "position": (0.77, 0.57), "size": (0.005, 0.45),
-         "vector": (0.6, 0.8), "dangerLevel": 0.9}
-    ]
-    in_json = json.dumps(situation)  # Encode the data
+def situationAnalysis(detectionResult):
+    # result has keys [name, position, size, vector, dangerLevel, confidence]
+    for result in detectionResult:
+        result['position'] = result["top_left_position"]
+        result['size'] = (result['bottom_right_position'][0] - result['position'][0],
+                          result['bottom_right_position'][1] - result['position'][1])
+        result["vector"]=(0,0)
+        result["dangerLevel"] = 0.0
+        del result["top_left_position"]
+        del result['bottom_right_position']
+        
+    in_json = json.dumps(detectionResult)  # Encode the data
     return in_json
+
 
 '''
 def cleanPhotoCache():
