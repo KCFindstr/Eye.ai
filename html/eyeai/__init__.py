@@ -112,7 +112,7 @@ def situationAnalysis(detectionResult):
                           result['bottom_right_position'][0] - result['position'][1])
         result["vector"] = (0, 0)
         # currently use the area of the object to measure its dangerous level
-        result["dangerLevel"] = result['size'][0] * result['size'][1]
+        result["dangerLevel"] = (result['size'][0] * result['size'][1])**0.25
         result["confidence"] = float(result["confidence"])
         del result["top_left_position"]
         del result['bottom_right_position']
