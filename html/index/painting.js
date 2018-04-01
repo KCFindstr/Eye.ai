@@ -35,6 +35,9 @@ function drawHYYObjectsOnCanvas(canvas, obj) {
 	for (var i=0; i<obj.length; i++) {
 		var ret = "<div style='margin-bottom: 10px;'>";
 		var cur = JSON.parse(JSON.stringify(obj[i]));
+		if (cur.debug) {
+			console.log(cur.debug);
+		}
 		for (var j=0; j<=1; j++) {
 			cur.position[j] *= scale[j];
 			cur.size[j] *= scale[j];
@@ -92,7 +95,7 @@ function tell(obj) {
 			maxpos = i;
 	}
 	var cur = obj[maxpos];
-	console.log(cur.dangerLevel, telling);
+//	console.log(cur.dangerLevel, telling);
 	if (cur.dangerLevel > DANGER_LIMIT) {
 		var x = cur.position[0]+cur.size[0]/2;
 		var y = cur.position[1]+cur.size[1]/2;
@@ -103,4 +106,9 @@ function tell(obj) {
 		text += pos;
 		speak(text);
 	}
+}
+
+// Convert to text
+function listen() {
+
 }

@@ -104,14 +104,23 @@
 				<video id="player" controls autoplay></video>
 				<canvas id="snapshot" width=400 height=300></canvas>
 			</div>
-			<div id="info">
-			</div>
+			<div id="info"></div>
 		</div>
 	</center>
 
 	<script>
 		$(document).ready(function () {
+/*			// Voice
+			var recognition = new webkitSpeechRecognition();
+			recognition.interimResults = true;
+			recognition.continuous = true;
+			recognition.onresult = function(event) {
+				console.log(event);
+			};
+			recognition.lang = "en-GB";
+			recognition.start();*/
 
+			// Camera
 			var player = document.getElementById('player');
 			var snapshotCanvas = document.getElementById('snapshot');
 			var drawCanvas = document.getElementById('draw');
@@ -126,6 +135,10 @@
 					// console.log("try to send file");
 					if (flag)
 						return;
+					var context = snapshot.getContext('2d');
+					// Draw the video frame to the canvas.
+					context.drawImage(player, 0, 0, snapshotCanvas.width,
+						snapshotCanvas.height);
 					var dataurl = snapshotCanvas.toDataURL('image/jpeg', 0.1);
 					var blob = dataURLtoBlob(dataurl);
 					//使用ajax发送
