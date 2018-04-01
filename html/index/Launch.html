@@ -56,7 +56,8 @@
 			z-index: 0;
 		}
 		#vcontain {
-			width: 800px;
+			width: 1200px;
+			height: 600px;
 			margin-left: auto;
 			margin-right: auto;
 			position: relative;
@@ -68,6 +69,29 @@
 			top:0;
 			left:0;
 		}
+		#info {
+			font-size: 20px;
+			text-align: left;
+			border: 1px solid black;
+			box-shadow: darkgrey 0px 0px 10px 5px inset;
+			width: 390px;
+			height: 600px;
+			float: left;
+			padding: 20px;
+			overflow-y: scroll;
+		}
+		#vd {
+			width: 800px;
+			height: 600px;
+			float: left;
+		}
+		.danger {
+			text-align: center;
+			background-color: skyblue;
+			padding: 5px;
+			border-radius: 10px;
+			border: 1px solid black;
+		}
 	</style>
 </head>
 
@@ -75,17 +99,13 @@
 <body>
 	<center>
 		<div id="vcontain">
-			<div>
+			<div id="vd">
 				<canvas id="draw" width="800px" height="600px"></canvas>
 				<video id="player" controls autoplay></video>
+				<canvas id="snapshot" width=400 height=300></canvas>
 			</div>
-		</div>
-		<div>
-			<button id="capture" type="button" class="btn btn-primary">Capture</button>
-			<button id="upload" type="button" class="btn btn-primary">Upload</button>
-		</div>
-		<div>
-			<canvas id="snapshot" width=400 height=300></canvas>
+			<div id="info">
+			</div>
 		</div>
 	</center>
 
@@ -94,8 +114,6 @@
 
 			var player = document.getElementById('player');
 			var snapshotCanvas = document.getElementById('snapshot');
-			var captureButton = document.getElementById('capture');
-			var uploadButton = document.getElementById('upload');
 			var drawCanvas = document.getElementById('draw');
 			// var videoTracks;
 			var flag = false;
@@ -134,13 +152,6 @@
 					// the last request has been received 
 				}, 1000);
 			};
-
-			captureButton.addEventListener('click', function () {
-				var context = snapshot.getContext('2d');
-				// Draw the video frame to the canvas.
-				context.drawImage(player, 0, 0, snapshotCanvas.width,
-					snapshotCanvas.height);
-			});
 
 			navigator.mediaDevices.getUserMedia({ video: true })
 				.then(handleSuccess);

@@ -1,5 +1,6 @@
 const DANGER_LIMIT = 0.618;
 const CENTER_LIMIT = 0.8;
+const MAX_SIZE = 10;
 
 var telling = false;
 var msg;
@@ -22,13 +23,23 @@ function drawHYYObjectsOnCanvas(canvas, obj) {
 	var scale = [canvas.width, canvas.height];
 	var safe = [0, 128, 255];
 	var danger = [255, 64, 0];
-	var ctx= canvas.getContext("2d");
+	var ctx = canvas.getContext("2d");
+	var ele = $("#info");
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.setLineDash([2,3]);
+	ctx.lineWidth = 2;
+	// Check scroll bar position
+	var atBottom = false;
+	if (ele.innerHeight() + 10 >= ele[0].scrollHeight - ele.scrollTop())
+		atBottom = true;
 	for (var i=0; i<obj.length; i++) {
+		var ret = "<div style='margin-bottom: 10px;'>";
 		var cur = JSON.parse(JSON.stringify(obj[i]));
 		for (var j=0; j<=1; j++) {
 			cur.position[j] *= scale[j];
 			cur.size[j] *= scale[j];
+			cur.position[j] = parseInt(cur.position[j]);
+			cur.size[j] = parseInt(cur.size[j]);
 		}
 		let color = "rgb(";
 		for (var j=0; j<3; j++) {
@@ -38,9 +49,21 @@ function drawHYYObjectsOnCanvas(canvas, obj) {
 				color += ",";
 		}
 		color += ")";
+		ret += "<div class='danger' style='color:" + color + "'>Danger Level: " + 
+			parseInt(cur.dangerLevel*1000)/10 + "%:</div> One " + cur.name +
+			" at (" + cur.position[0] + ", " + cur.position[1] + ")<br/>width = "
+			+ cur.size[0] + " / height = " + cur.size[1];
 		ctx.strokeStyle = color;
-		ctx.lineWidth = 3;
 		ctx.strokeRect(cur.position[0], cur.position[1], cur.size[0], cur.size[1]);
+		ret += "</div>";
+		ele.append($(ret));
+	}
+	while (ele.children("div").length > MAX_SIZE) {
+		ele.children("div").first().remove();
+	}
+	if (atBottom) {
+		ele.scrollTop(ele[0].scrollHeight-ele.innerHeight());
+//		ele.animate({scrollTop: ele.height()}, 300);
 	}
 }
 
