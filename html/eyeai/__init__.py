@@ -116,12 +116,13 @@ def situationAnalysis(detectionResult):
                           result['bottom_right_position'][0] - result['position'][1])
         # vector is the speed
         result["vector"] = (0, 0)
+        size=(result['size'][0] * result['size'][1])
         # specifc item has been optimized
         if (result['name'] in dangerIndex):
-            result["dangerLevel"] = (result['size'][0] * result['size'][1]) ** dangerIndex[result['name']]
+            result["dangerLevel"] = size ** dangerIndex[result['name']]
         else:
             # currently use the area of the object to measure its dangerous level
-            result["dangerLevel"] = (result['size'][0] * result['size'][1]) ** dangerStdIndex
+            result["dangerLevel"] = size ** dangerStdIndex
         result["confidence"] = float(result["confidence"])
         del result["top_left_position"]
         del result['bottom_right_position']
