@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import requests
 import json
 from PIL import Image
-from detection_inference_api import object_detection
+from object_detection/detection_inference_api import object_detection
 from config import *
 
 app = Flask(__name__)
@@ -107,7 +107,7 @@ def situationAnalysis(detectionResult):
         result["dangerLevel"] = 0.0
         del result["top_left_position"]
         del result['bottom_right_position']
-        
+
     in_json = json.dumps(detectionResult)  # Encode the data
     return in_json
 
