@@ -3,14 +3,13 @@ import numpy as np
 from PIL import Image
 import os
 
-#from utils import visualization_utils as vis_util
 from utils import label_map_util
 
 # Truncate any detection that has confidence level under MIN_CONFID
 MIN_CONFID = 0.8
 
 # List of strings used to add correct label for each box
-PATH_TO_LABELS = os.path.join('/home/jinhuyinhu99513/object_detection/data', 'mscoco_label_map.pbtxt')
+PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
 NUM_CLASSES = 90
 IMAGE_SIZE = (20, 16)
 
@@ -90,11 +89,10 @@ class ObjectDetection(object):
         results = self.detect_boundingbox_convert(output_dict)
         
         # Truncate any detection that has confidence level under MIN_CONFID
-        #truncated_results = []
-        #for result in results:
-        #    if result["confidence"] > MIN_CONFID:
-        #        truncated_results.append(result)
+        truncated_results = []
+        for result in results:
+            if result["confidence"] > MIN_CONFID:
+                truncated_results.append(result)
         
-        #return truncated_results
-        return results
+        return truncated_results
     
